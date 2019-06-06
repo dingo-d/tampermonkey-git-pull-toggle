@@ -9,7 +9,6 @@
 // @match        http://*.github.com/*/pulls/*
 // @match        https://*.github.com/*/pulls
 // @match        https://*.github.com/*/pulls/*
-// @require      https://code.jquery.com/jquery-3.3.1.min.js
 // @run-at       document-idle
 // ==/UserScript==
 
