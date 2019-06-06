@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Github collapse button
 // @namespace    http://tampermonkey.net/
-// @version      0.1
+// @version      0.2
 // @description  Git collapse all button
 // @author       Denis Žoljom
 // @include      https://github.com/*
@@ -16,6 +16,8 @@
 (() => {
   'use strict';
 
+  var $ = window.jQuery;
+
   var element = $('.float-right.pr-review-tools');
 
   if (typeof element !== 'undefined') {
@@ -25,7 +27,7 @@
   $('.js-collapse-all').on('click', (event) => {
     event.preventDefault();
 
-    $('.js-file:not(.open) .file-header > .file-actions > .js-details-target').each(function() {
+    $('.js-file.open .js-details-target').each(function() {
       $(this).click();
     });
   });
@@ -33,7 +35,7 @@
   $('.js-expand-all').on('click', (event) => {
     event.preventDefault();
 
-    $('.js-file.open .file-header > .file-actions > .js-details-target').each(function() {
+    $('.js-file:not(.open) .js-details-target').each(function() {
       $(this).click();
     });
   });
