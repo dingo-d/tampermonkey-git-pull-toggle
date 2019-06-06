@@ -16,27 +16,38 @@
 (() => {
   'use strict';
 
-  var $ = window.jQuery;
+  const element = document.querySelector('.float-right.pr-review-tools');
 
-  var element = $('.float-right.pr-review-tools');
-
-  if (typeof element !== 'undefined') {
-    element.prepend('<a href="#" style="margin-left:20px;" class="btn btn-sm tooltipped tooltipped-nw js-collapse-all" rel="nofollow" aria-label="Collapse all files">Collapse all files</a><a href="#" style="margin-left:20px;" class="btn btn-sm tooltipped tooltipped-nw js-expand-all" rel="nofollow" aria-label="Expand all files">Expand all files</a>');
+  if (typeof element == 'undefined') {
+    return;
   }
 
-  $('.js-collapse-all').on('click', (event) => {
-    event.preventDefault();
+  const parser = new DOMParser();
+  const domString = '<span><a href="#" style="margin-left:20px;" class="btn btn-sm tooltipped tooltipped-nw js-collapse-all" rel="nofollow" aria-label="Collapse all files">Collapse all files</a><a href="#" style="margin-left:20px;" class="btn btn-sm tooltipped tooltipped-nw js-expand-all" rel="nofollow" aria-label="Expand all files">Expand all files</a></span>';
+  const html = parser.parseFromString(domString, 'text/html');
 
-    $('.js-file.open .js-details-target').each(function() {
-      $(this).click();
+  element.insertBefore(html.body.firstChild, element.firstChild);
+
+  const collapseButton = document.querySelector('.js-collapse-all');
+  const expandButton = document.querySelector('.js-expand-all');
+
+  collapseButton.addEventListener('click', (ev) => {
+    ev.preventDefault();
+
+    const openedElements = document.querySelectorAll('.js-file.open .js-details-target');
+
+    [].forEach.call(openedElements, (element) => {
+      element.click();
     });
-  });
+  }, false);
 
-  $('.js-expand-all').on('click', (event) => {
-    event.preventDefault();
+  expandButton.addEventListener('click', (ev) => {
+    ev.preventDefault();
 
-    $('.js-file:not(.open) .js-details-target').each(function() {
-      $(this).click();
+    const closedElements = document.querySelectorAll('.js-file:not(.open) .js-details-target');
+
+    [].forEach.call(closedElements, (element) => {
+      element.click();
     });
-  });
+  }, false);
 })();
